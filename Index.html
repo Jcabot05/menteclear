@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MenteClear — Plataforma de bienestar mental para estudiantes universitarios latinoamericanos. Herramientas de autocuidado sin citas, sin costo, en español.">
+  <title>MenteClear — Bienestar mental universitario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-50:  #E1F5EE;
+      --green-100: #9FE1CB;
+      --green-400: #1D9E75;
+      --green-600: #0F6E56;
+      --green-800: #085041;
+      --green-900: #04342C;
+      --white: #FFFFFF;
+      --gray-50: #F7F8F6;
+      --gray-200: #E4E6E1;
+      --gray-500: #6B7168;
+      --gray-800: #1C1F1B;
+      --font-head: 'Fraunces', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow: 0 2px 24px rgba(4,52,44,.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--gray-800); background: var(--white); line-height: 1.65; font-size: 16px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── NAV ── */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); }
+    nav { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--green-400); flex-shrink: 0; }
+    .logo-text { font-family: var(--font-head); font-size: 20px; font-weight: 600; color: var(--green-800); letter-spacing: -.3px; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 15px; color: var(--gray-500); font-weight: 400; transition: color .2s; }
+    .nav-links a:hover { color: var(--green-600); }
+    .btn-primary { background: var(--green-400); color: var(--white); border: none; border-radius: var(--radius-sm); padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
+    .btn-primary:hover { background: var(--green-600); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--green-600); border: 1.5px solid var(--green-400); border-radius: var(--radius-sm); padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: var(--font-body); cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+    .btn-outline:hover { background: var(--green-50); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-800); border-radius: 2px; transition: all .25s; }
+    .mobile-menu { display: none; }
+
+    /* ── HERO ── */
+    #inicio { background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 60%); padding: 90px 24px 80px; text-align: center; }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-badge { display: inline-block; background: var(--green-100); color: var(--green-800); font-size: 12px; font-weight: 500; border-radius: 20px; padding: 5px 14px; margin-bottom: 22px; letter-spacing: .04em; text-transform: uppercase; }
+    .hero-h { font-family: var(--font-head); font-size: clamp(36px, 5.5vw, 58px); font-weight: 600; color: var(--green-900); line-height: 1.12; letter-spacing: -.5px; margin-bottom: 20px; }
+    .hero-h em { color: var(--green-400); font-style: italic; }
+    .hero-sub { font-size: 18px; color: var(--gray-500); margin-bottom: 36px; line-height: 1.7; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .hero-stats { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .stat-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px 28px; box-shadow: var(--shadow); min-width: 160px; }
+    .stat-num { font-family: var(--font-head); font-size: 30px; font-weight: 600; color: var(--green-600); display: block; }
+    .stat-label { font-size: 13px; color: var(--gray-500); }
+
+    /* ── SECTIONS shared ── */
+    section { padding: 88px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag { display: inline-block; font-size: 12px; font-weight: 500; color: var(--green-600); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+    .section-title { font-family: var(--font-head); font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; color: var(--green-900); line-height: 1.18; margin-bottom: 12px; letter-spacing: -.3px; }
+    .section-sub { font-size: 17px; color: var(--gray-500); max-width: 560px; margin-bottom: 52px; line-height: 1.7; }
+
+    /* ── DESCRIPCIÓN ── */
+    #descripcion { background: var(--gray-50); }
+    .desc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .desc-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 28px 24px; transition: box-shadow .25s, transform .25s; }
+    .desc-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .desc-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--green-50); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .desc-icon svg { stroke: var(--green-600); }
+    .desc-h { font-size: 15px; font-weight: 600; color: var(--green-900); margin-bottom: 6px; }
+    .desc-p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ── BENEFICIOS ── */
+    #beneficios { background: var(--green-800); }
+    #beneficios .section-tag { color: var(--green-100); }
+    #beneficios .section-title { color: var(--white); }
+    #beneficios .section-sub { color: var(--green-100); }
+    .ben-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .ben-card { border: 1px solid rgba(255,255,255,.15); border-radius: var(--radius); padding: 32px 28px; transition: background .25s; }
+    .ben-card:hover { background: rgba(255,255,255,.06); }
+    .ben-num { font-family: var(--font-head); font-size: 44px; font-weight: 600; color: var(--green-100); line-height: 1; margin-bottom: 18px; opacity: .55; }
+    .ben-h { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .ben-p { font-size: 14px; color: var(--green-100); line-height: 1.65; }
+
+    /* ── TESTIMONIOS ── */
+    #testimonios { background: var(--white); }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .testi-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 28px 26px; }
+    .testi-quote { font-size: 36px; line-height: 1; color: var(--green-400); font-family: Georgia, serif; margin-bottom: 12px; }
+    .testi-txt { font-size: 15px; color: var(--gray-500); line-height: 1.7; margin-bottom: 22px; font-style: italic; }
+    .testi-user { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green-100); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--green-800); flex-shrink: 0; }
+    .testi-name { font-size: 14px; font-weight: 600; color: var(--green-900); }
+    .testi-role { font-size: 12px; color: var(--gray-500); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--green-50); }
+    .contact-inner { max-width: 560px; margin: 0 auto; text-align: center; }
+    .contact-inner .section-sub { margin-left: auto; margin-right: auto; }
+    .contact-form { text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    label { font-size: 13px; font-weight: 500; color: var(--green-800); }
+    input[type="text"], input[type="email"], textarea {
+      border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm); padding: 11px 14px;
+      font-size: 15px; font-family: var(--font-body); color: var(--gray-800); background: var(--white);
+      transition: border-color .2s; width: 100%; outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--green-400); box-shadow: 0 0 0 3px rgba(29,158,117,.12); }
+    textarea { resize: vertical; min-height: 120px; }
+    .btn-full { width: 100%; padding: 13px; font-size: 16px; border-radius: var(--radius-sm); }
+    .social-links { margin-top: 28px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+    .social-links a { font-size: 13px; color: var(--green-600); text-decoration: none; font-weight: 500; transition: color .2s; }
+    .social-links a:hover { color: var(--green-800); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--green-900); padding: 36px 24px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: var(--green-100); text-decoration: none; opacity: .7; transition: opacity .2s; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-copy { font-size: 13px; color: var(--green-100); opacity: .5; }
+    .logo-footer .logo-text { color: var(--green-100); }
+    .logo-footer .logo-dot { background: var(--green-100); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .nav-links, nav > .btn-primary { display: none; }
+      .hamburger { display: flex; }
+      nav { position: relative; }
+      .mobile-menu { flex-direction: column; gap: 0; position: absolute; top: 64px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 12px 0; z-index: 200; }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu li { list-style: none; }
+      .mobile-menu li a { display: block; padding: 13px 24px; font-size: 16px; color: var(--gray-800); text-decoration: none; }
+      .mobile-menu li a:hover { background: var(--gray-50); }
+      .mobile-menu .btn-primary { margin: 10px 20px; display: block; text-align: center; border-radius: var(--radius-sm); }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER / NAV ── -->
+<header>
+  <nav>
+    <a href="#inicio" class="logo" aria-label="MenteClear inicio">
+      <div class="logo-dot" aria-hidden="true"></div>
+      <span class="logo-text">MenteClear</span>
+    </a>
+    <ul class="nav-links" aria-label="Navegación principal">
+      <li><a href="#descripcion">Descripción</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="btn-primary">Comenzar gratis</a>
+    <button class="hamburger" aria-label="Abrir menú" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <ul class="mobile-menu" id="mobile-menu" aria-label="Menú móvil">
+    <li><a href="#descripcion">Descripción</a></li>
+    <li><a href="#beneficios">Beneficios</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#contacto" class="btn-primary" style="margin:12px 24px;display:block;text-align:center;">Comenzar gratis</a></li>
+  </ul>
+</header>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <section id="inicio" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <span class="hero-badge fade-up">Bienestar mental universitario</span>
+      <h1 class="hero-h fade-up" id="hero-title">Tu mente también necesita<br><em>descansar entre parciales</em></h1>
+      <p class="hero-sub fade-up">Herramientas de autocuidado diseñadas para el ritmo universitario. Sin citas. Sin costo. Sin excusas.</p>
+      <div class="hero-btns fade-up">
+        <a href="#contacto" class="btn-primary">Empieza ahora — es gratis</a>
+        <a href="#descripcion" class="btn-outline">Ver cómo funciona</a>
+      </div>
+      <div class="hero-stats fade-up">
+        <div class="stat-card">
+          <span class="stat-num">1.240</span>
+          <span class="stat-label">Sesiones hoy</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">38</span>
+          <span class="stat-label">Universidades</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">12 k</span>
+          <span class="stat-label">Usuarios activos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESCRIPCIÓN ── -->
+  <section id="descripcion" aria-labelledby="desc-title">
+    <div class="section-inner">
+      <span class="section-tag fade-up">¿Qué es MenteClear?</span>
+      <h2 class="section-title fade-up" id="desc-title">Diseñado para lo que vives<br>en la universidad</h2>
+      <p class="section-sub fade-up">No es una app genérica de meditación. Es una plataforma pensada para el estrés académico, los plazos imposibles y las noches sin dormir.</p>
+      <div class="desc-grid">
+        <article class="desc-card fade-up">
+          <div class="desc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 14.5 14.5"/></svg>
+          </div>
+          <h3 class="desc-h">Ejercicios de 5 minutos</h3>
+          <p class="desc-p">Técnicas de respiración y mindfulness que caben en el tiempo entre clases.</p>
+        </article>
+        <article class="desc-card fade-up">
+          <div class="desc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="desc-h">Diario emocional privado</h3>
+          <p class="desc-p">Registra cómo te sientes cada día. Sin juicios, sin compartir con nadie.</p>
+        </article>
+        <article class="desc-card fade-up">
+          <div class="desc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3 class="desc-h">Recursos psicoeducativos</h3>
+          <p class="desc-p">Artículos breves sobre ansiedad, procrastinación y bienestar universitario.</p>
+        </article>
+        <article class="desc-card fade-up">
+          <div class="desc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="desc-h">Sin barreras de acceso</h3>
+          <p class="desc-p">Gratuito, en español, desde cualquier dispositivo con internet.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BENEFICIOS ── -->
+  <section id="beneficios" aria-labelledby="ben-title">
+    <div class="section-inner">
+      <span class="section-tag fade-up">Por qué MenteClear</span>
+      <h2 class="section-title fade-up" id="ben-title">Lo que cambia cuando<br>cuidas tu mente</h2>
+      <p class="section-sub fade-up">Beneficios concretos para tu vida universitaria — no promesas vacías.</p>
+      <div class="ben-grid">
+        <article class="ben-card fade-up">
+          <div class="ben-num" aria-hidden="true">01</div>
+          <h3 class="ben-h">Menos ansiedad antes de los exámenes</h3>
+          <p class="ben-p">Rutinas guiadas que calman el sistema nervioso en menos de 10 minutos, justo cuando más lo necesitas.</p>
+        </article>
+        <article class="ben-card fade-up">
+          <div class="ben-num" aria-hidden="true">02</div>
+          <h3 class="ben-h">Más concentración al estudiar</h3>
+          <p class="ben-p">Técnicas de enfoque cognitivo adaptadas a sesiones de estudio largas para rendir al máximo.</p>
+        </article>
+        <article class="ben-card fade-up">
+          <div class="ben-num" aria-hidden="true">03</div>
+          <h3 class="ben-h">Dormir mejor aunque estés estresado</h3>
+          <p class="ben-p">Meditaciones nocturnas especiales para cuando tu mente no para de pensar en todo lo que tienes pendiente.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIOS ── -->
+  <section id="testimonios" aria-labelledby="testi-title">
+    <div class="section-inner">
+      <span class="section-tag fade-up">Lo que dicen nuestros usuarios</span>
+      <h2 class="section-title fade-up" id="testi-title">Estudiantes reales,<br>cambios reales</h2>
+      <p class="section-sub fade-up">Más de 12.000 universitarios ya cuidan su mente con MenteClear.</p>
+      <div class="testi-grid">
+        <article class="testi-card fade-up">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <p class="testi-txt">En épocas de exámenes solía bloquearme por la ansiedad. MenteClear me dio herramientas que uso en 5 minutos y que de verdad funcionan.</p>
+          <div class="testi-user">
+            <div class="avatar" aria-hidden="true">VR</div>
+            <div>
+              <p class="testi-name">Valentina R.</p>
+              <p class="testi-role">Psicología — UCSG</p>
+            </div>
+          </div>
+        </article>
+        <article class="testi-card fade-up">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <p class="testi-txt">No creía en el mindfulness hasta que lo probé en contexto universitario. El diario emocional me ayudó a entender por qué me estaba quemando.</p>
+          <div class="testi-user">
+            <div class="avatar" aria-hidden="true">CM</div>
+            <div>
+              <p class="testi-name">Carlos M.</p>
+              <p class="testi-role">Ingeniería — ESPOL</p>
+            </div>
+          </div>
+        </article>
+        <article class="testi-card fade-up">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <p class="testi-txt">Lo mejor es que está en español y entiende el contexto latinoamericano. No es una traducción de algo pensado para otro mercado.</p>
+          <div class="testi-user">
+            <div class="avatar" aria-hidden="true">AS</div>
+            <div>
+              <p class="testi-name">Andrea S.</p>
+              <p class="testi-role">Comunicación — UG</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto" aria-labelledby="contact-title">
+    <div class="section-inner">
+      <div class="contact-inner">
+        <span class="section-tag fade-up">¿Tienes preguntas?</span>
+        <h2 class="section-title fade-up" id="contact-title">Escríbenos</h2>
+        <p class="section-sub fade-up">Responderemos en menos de 24 horas. O síguenos en redes para contenido de bienestar diario.</p>
+        <form class="contact-form fade-up" aria-label="Formulario de contacto" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Tu nombre</label>
+              <input type="text" id="name" name="name" placeholder="Valentina Ríos" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">¿En qué podemos ayudarte?</label>
+            <textarea id="message" name="message" placeholder="Cuéntanos tu pregunta o comentario..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-full">Enviar mensaje</button>
+          <p id="form-success" style="display:none;text-align:center;margin-top:14px;color:var(--green-600);font-weight:500;">✓ Mensaje enviado. ¡Pronto te respondemos!</p>
+        </form>
+        <div class="social-links fade-up" aria-label="Redes sociales">
+          <a href="#" aria-label="Instagram de MenteClear">Instagram @menteclear</a>
+          <span aria-hidden="true" style="color:var(--gray-200);">·</span>
+          <a href="#" aria-label="TikTok de MenteClear">TikTok @menteclear</a>
+          <span aria-hidden="true" style="color:var(--gray-200);">·</span>
+          <a href="mailto:hola@menteclear.co">hola@menteclear.co</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <a href="#inicio" class="logo logo-footer" aria-label="MenteClear inicio">
+      <div class="logo-dot" aria-hidden="true"></div>
+      <span class="logo-text">MenteClear</span>
+    </a>
+    <nav aria-label="Pie de página">
+      <ul class="footer-links">
+        <li><a href="#descripcion">Descripción</a></li>
+        <li><a href="#beneficios">Beneficios</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <p class="footer-copy">© 2025 MenteClear. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.getElementById('hamburger').addEventListener('click', function() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+    this.setAttribute('aria-expanded', menu.classList.contains('open'));
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('open'));
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => document.getElementById('form-success').style.display = 'none', 5000);
+  }
+</script>
+
+</body>
+</html>
