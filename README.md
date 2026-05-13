@@ -31,6 +31,11 @@ El sitio estático incluye las siguientes secciones:
 
 ---
 
+## Captura de pantalla
+
+<img width="1853" height="968" alt="image" src="https://github.com/user-attachments/assets/b9faae99-0848-4f8e-b66e-9c2137e850fa" />
+
+---
 
 ## Tecnologías
 
