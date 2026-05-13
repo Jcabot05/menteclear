@@ -42,3 +42,6 @@ El sitio estático incluye las siguientes secciones:
 ---
 
 ## Estructura del repositorio
+menteclear/
+├── index.html
+└── README.md
